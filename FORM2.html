@@ -1,0 +1,105 @@
+2nd page of form
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Information Result</title>
+    <style>
+        /* Center the table and style the page */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 60%; /* Adjust the width as needed */
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+    </style>
+    <script>
+        // This script retrieves the form data from localStorage
+        window.onload = function() {
+            const name = localStorage.getItem('name');
+            const phoneNumber = localStorage.getItem('phoneNumber');
+            const baseSalary = localStorage.getItem('baseSalary');
+            const incrementPercentage = localStorage.getItem('incrementPercentage');
+            const currentDate = localStorage.getItem('currentDate');
+            const joiningDate = localStorage.getItem('joiningDate');
+            const updatedSalary = localStorage.getItem('updatedSalary');
+
+            // Check if data exists before displaying
+            if (name && phoneNumber && baseSalary && incrementPercentage && currentDate && joiningDate && updatedSalary) {
+                // Display the data on the page
+                document.getElementById('name_value').textContent = name;
+                document.getElementById('phone_number_value').textContent = phoneNumber;
+                document.getElementById('base_salary_value').textContent = baseSalary;
+                document.getElementById('increment_percentage_value').textContent = incrementPercentage;
+                document.getElementById('current_date_value').textContent = currentDate;
+                document.getElementById('joining_date_value').textContent = joiningDate;
+                document.getElementById('updated_salary_value').textContent = updatedSalary; // No dollar sign
+            } else {
+                // If data is not found in localStorage, show an error
+                alert("No data found!");
+                window.location.href = 'index.html'; // Redirect back to the form
+            }
+        };
+    </script>
+</head>
+
+<body>
+	<p>
+    <h2>Submitted Salary Information</h2>
+
+    <!-- Create a table to display results -->
+    <table style ="border:dotted 2px black">
+	   <tr>
+            <th>Name</th>
+            <td id="name_value"></td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td id="phone_number_value"></td>
+        </tr>
+        <tr>
+            <th>Base Salary</th>
+            <td id="base_salary_value"></td>
+        </tr>
+        <tr>
+            <th>Increment Percentage</th>
+            <td id="increment_percentage_value"></td>
+        </tr>
+        <tr>
+            <th>Current Date</th>
+            <td id="current_date_value"></td>
+        </tr>
+        <tr>
+            <th>Joining Date</th>
+            <td id="joining_date_value"></td>
+        </tr>
+        <tr>
+            <th>Updated Salary (after increments)</th>
+            <td id="updated_salary_value"></td>
+        </tr>
+    </table>
+	</p>
+
+</body>
+</html>

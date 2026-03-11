@@ -1,0 +1,27 @@
+<html>
+	<head>
+		<title>Form Validation</title>
+		<script>
+			function validateForm() 
+			{
+				let x = document.forms["myForm"]["fname"].value;
+				if (x == "") 
+				{
+					alert("Name must be filled out");
+					return false;
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<h2><center>Form Validation</center></h2>
+		<form name="myForm" action="/action_page.js" onsubmit="return validateform()" method="post">
+		<p><center>FNAM: <input type="text" name="fname" required></center></p>
+		<p><center>MNAM: <input type="text" name="mname" required></center></p>
+		<p><center>LNAM: <input type="text" name="lname" required></center></p>
+		<p><center>DOBR: <input type="datetime" DOB="dob" required></center></p>
+		<p><center>BLDG: <input type="text" BloodGroup="O+" required></center></p>
+		<p><center>CITY: <input type="text" City="city" required></center></p>
+		<p><center>  <input type="submit" value="submit" required>
+	</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 12 Result</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: center;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2 style="text-align: center;">Class 12 Result</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Marks</th>
+            </tr>
+        </thead>
+        <tbody id="marksTable">
+            <tr><td>Math</td><td><input type="number" class="marks" value="0"></td></tr>
+            <tr><td>Physics</td><td><input type="number" class="marks" value="0"></td></tr>
+            <tr><td>Chemistry</td><td><input type="number" class="marks" value="0"></td></tr>
+            <tr><td>Biology</td><td><input type="number" class="marks" value="0"></td></tr>
+            <tr><td>English</td><td><input type="number" class="marks" value="0"></td></tr>
+        </tbody>
+    </table>
+    <div style="text-align: center;">
+        <button onclick="calculateResult()">Calculate Result</button>
+    </div>
+    <h3 style="text-align: center;">Total: <span id="total">0</span></h3>
+    <h3 style="text-align: center;">Average: <span id="average">0</span></h3>
+    <h3 style="text-align: center;">Grade: <span id="grade">N/A</span></h3>
+    <script>
+        function calculateResult() {
+            let marks = document.querySelectorAll(".marks");
+            let total = 0;
+            marks.forEach(input => {
+                total += Number(input.value);
+            });
+            let average = total / marks.length;
+            let grade = "F";
+            if (average >= 90) grade = "A+";
+            else if (average >= 80) grade = "A";
+            else if (average >= 70) grade = "B";
+            else if (average >= 60) grade = "C";
+            else if (average >= 50) grade = "D";
+            document.getElementById("total").textContent = total;
+            document.getElementById("average").textContent = average.toFixed(2);
+            document.getElementById("grade").textContent = grade;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Cow and Bull Game (6 Digits)</title>
+		<style>
+			body 
+				{
+					font-family: Arial, sans-serif;
+					text-align: center;
+					margin: 50px;
+					background-color: #f4f4f4;
+				}
+			h1 
+				{
+					color: #333;
+				}
+			.container 
+				{
+					display: flex;
+					justify-content: center;
+					gap: 10px;
+					margin-top: 10px;
+				}
+			.digit-box 
+				{
+					width: 40px;
+					height: 40px;
+					font-size: 24px;
+					text-align: center;
+					border: 2px solid #ccc;
+					border-radius: 5px;
+				}
+			.digit-box:focus 
+				{
+					border-color: blue;
+					outline: none;
+				}
+			.secret-box 
+				{
+					width: 40px;
+					height: 40px;
+					font-size: 24px;
+					text-align: center;
+					border: 2px solid green;
+					border-radius: 5px;
+					background-color: #d4f8d4;
+					font-weight: bold;
+				}
+			button 
+				{
+					font-size: 16px;
+					padding: 10px;
+					margin-top: 15px;
+					cursor: pointer;
+				}
+			#output 
+				{
+					margin-top: 20px;
+					font-size: 18px;
+				}
+			#secretNumberContainer 
+				{
+					display: none; /* Initially hidden */
+					margin-top: 15px;
+				}
+    </style>
+</head>
+<body>
+
+    <h1>🐄🐂 Cow and Bull Game (6 Digits) 🐄🐂</h1>
+    <p>Guess the 6-digit number with unique digits.</p>
+
+    <!-- Six input boxes for user input -->
+    <div class="container">
+        <input type="text" class="digit-box" maxlength="1" oninput="moveToNext(this, 0)">
+        <input type="text" class="digit-box" maxlength="1" oninput="moveToNext(this, 1)">
+        <input type="text" class="digit-box" maxlength="1" oninput="moveToNext(this, 2)">
+        <input type="text" class="digit-box" maxlength="1" oninput="moveToNext(this, 3)">
+        <input type="text" class="digit-box" maxlength="1" oninput="moveToNext(this, 4)">
+        <input type="text" class="digit-box" maxlength="1" oninput="moveToNext(this, 5)">
+    </div>
+
+    <button onclick="checkGuess()">Submit</button>
+    <p id="output"></p>
+
+    <!-- Hidden area for the secret number (will be revealed after guessing) -->
+    <div id="secretNumberContainer" class="container">
+        <input type="text" class="secret-box" disabled>
+        <input type="text" class="secret-box" disabled>
+        <input type="text" class="secret-box" disabled>
+        <input type="text" class="secret-box" disabled>
+        <input type="text" class="secret-box" disabled>
+        <input type="text" class="secret-box" disabled>
+    </div>
+
+    <script>
+        // Function to generate a 6-digit number with unique digits
+        function generateNumber() {
+            let digits = '0123456789';
+            let number = '';
+            while (number.length < 6) {
+                let randomDigit = digits[Math.floor(Math.random() * digits.length)];
+                if (!number.includes(randomDigit)) {
+                    number += randomDigit;
+                }
+            }
+            return number;
+        }
+
+        // Function to calculate cows and bulls
+        function getCowsAndBulls(secret, guess) {
+            let cows = 0, bulls = 0;
+
+            for (let i = 0; i < secret.length; i++) {
+                if (guess[i] === secret[i]) {
+                    bulls++; // Correct digit, correct position
+                } else if (secret.includes(guess[i])) {
+                    cows++; // Correct digit, wrong position
+                }
+            }
+
+            return { cows, bulls };
+        }
+
+        // Function to move focus to the next input box
+        function moveToNext(input, index) {
+            let boxes = document.querySelectorAll('.digit-box');
+            if (input.value.length === 1 && index < 5) {
+                boxes[index + 1].focus();
+            }
+        }
+
+        // Generate the secret number
+        let secretNumber = generateNumber();
+        console.log("Secret Number:", secretNumber); // Debugging
+
+        // Store the secret number in the hidden boxes
+        let secretBoxes = document.querySelectorAll('.secret-box');
+        for (let i = 0; i < 6; i++) {
+            secretBoxes[i].value = secretNumber[i];
+        }
+
+        let attempts = 0;
+
+        // Function to check the user's guess
+        function checkGuess() {
+            let boxes = document.querySelectorAll('.digit-box');
+            let guess = Array.from(boxes).map(input => input.value).join('');
+
+            if (!/^\d{6}$/.test(guess) || new Set(guess).size !== 6) {
+                document.getElementById("output").innerHTML = "⚠ Invalid input! Enter 6 unique digits.";
+                return;
+            }
+
+            attempts++;
+            let result = getCowsAndBulls(secretNumber, guess);
+
+            document.getElementById("output").innerHTML = Cows: ${result.cows}, Bulls: ${result.bulls};
+
+            // Reveal the secret number after guessing
+            document.getElementById("secretNumberContainer").style.display = "flex";
+
+            if (result.bulls === 6) {
+                document.getElementById("output").innerHTML = 🎉 Congratulations! You guessed the number in ${attempts} attempts.;
+            }
+        }
+    </script>
+
+</body>
+</html>

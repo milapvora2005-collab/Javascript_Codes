@@ -1,0 +1,114 @@
+//1st page of form
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Form</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	
+
+
+    <script>
+        // This script will set the current date in the input field when the page loads
+        window.onload = function() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            document.getElementById('current_date').value = ${year}-${month}-${day};
+        };
+
+        // Handle form submission
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent actual form submission
+
+            // Capture form data
+            const name = document.getElementById('name').value;
+            const phoneNumber = document.getElementById('phone_number').value;
+            const baseSalary = document.getElementById('base_salary').value;
+            const incrementPercentage = document.getElementById('increment_percentage').value;
+            const currentDate = document.getElementById('current_date').value;
+            const joiningDate = document.getElementById('joining_date').value;
+
+            // Calculate the number of years since joining date
+            const joiningYear = new Date(joiningDate).getFullYear();
+            const currentYear = new Date(currentDate).getFullYear();
+            const yearsWorked = currentYear - joiningYear;
+
+            // Calculate the updated salary after 5% increase for each year
+            let updatedSalary = parseFloat(baseSalary);
+            for (let i = 0; i < yearsWorked; i++) {
+                updatedSalary *= 1.05; // Increase salary by 5% for each year
+            }
+
+            // Store data in localStorage for the next page
+            localStorage.setItem('name', name);
+            localStorage.setItem('phoneNumber', phoneNumber);
+            localStorage.setItem('baseSalary', baseSalary);
+            localStorage.setItem('incrementPercentage', incrementPercentage);
+            localStorage.setItem('currentDate', currentDate);
+            localStorage.setItem('joiningDate', joiningDate);
+            localStorage.setItem('updatedSalary', updatedSalary.toFixed(2));
+
+            // Redirect to the next page to display the results
+            window.location.href = 'result.html';
+        }
+		
+    </script>
+</head>
+<body><big><big><big>
+<center>
+
+    <h2>Salary Information Form</h2>
+
+    <form onsubmit="handleSubmit(event)">
+        <!-- Name Input -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+ 
+        <!-- Phone Number Input -->
+        <label for="phone_number">Phone Number:</label>
+        <input type="tel" id="phone_number" name="phone_number" required><br><br>
+
+        <!-- Base Salary Input -->
+        <label for="base_salary">Base Salary:</label>
+        <input type="number" id="base_salary" name="base_salary" required><br><br>
+
+        <!-- Increment Percentage Input -->
+        <label for="increment_percentage">Increment Percentage:</label>
+        <input type="number" id="increment_percentage" name="increment_percentage" value="5" readonly><br><br>
+
+        <!-- Current Date Input -->
+        <label for="current_date">Current Date:</label>
+        <input type="date" id="current_date" name="current_date" required><br><br>
+
+        <!-- Joining Date Input -->
+        <label for="joining_date">Joining Date:</label>
+        <input type="date" id="joining_date" name="joining_date" required><br><br>
+
+     
+
+    <!-- Submit Button -->
+    <button id="submitButton" onclick="FORM2.HTML">Submit</button>
+
+    <!-- Container to display the GIF -->
+    
+	
+    <script>
+        function showGIF() {
+            // Hide the submit button after it is clicked
+            document.getElementById('submitButton').style.display = 'none';
+            
+            // Show the GIF container
+            document.getElementById('gifContainer').style.display = 'block';
+        }
+    </script>
+
+
+		
+		
+</big></big></big>		
+</center>		
+</body>
+</html>
